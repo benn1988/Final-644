@@ -266,7 +266,7 @@ function totalPizzaPrice() {
 //HANDLE THE USER CLICKING THE ORDER BUTTON
 function finishOrder() {
     "use strict";
-    var i, inputs2, cardNumberSum, cardType, validation, cardNumber, goodToPay, incorrect2, incorrectText2, incorrectLenght, incorrectNumber, incorrectLenghtText, incorrectNumberText, addressType2;
+    var i, d, month, inputs2, cardNumberSum, cardType, validation, cardNumber, goodToPay, incorrect2, incorrectText2, incorrectLenght, incorrectNumber, incorrectLenghtText, incorrectNumberText, addressType2;
     addressType2 = $("addresstype2");
     incorrect2 = window.document.createElement("span");
     incorrectText2 = window.document.createTextNode(" Please review!");
@@ -481,6 +481,21 @@ function finishOrder() {
             }
         }
     }
+    
+    if ($("expyear").options[$("expyear").selectedIndex].text === "2018") {
+        d = new Date();
+        month = d.getMonth();
+        if ($("expmonth").selectedIndex < month) {
+            if ($("expmonth").previousElementSibling.lastChild.tagName !== "SPAN") {
+                $("expmonth").previousElementSibling.firstChild.parentNode.appendChild(incorrect2);
+                goodToPay = false;
+            }
+        } else {
+            if ($("expmonth").previousElementSibling.lastChild.tagName === "SPAN") {
+                $("expmonth").previousElementSibling.removeChild($("expmonth").previousElementSibling.lastChild);
+            }
+        }
+    }
     if (goodToPay === true) {
         window.alert("Your Pizza is already being baked. We charged your " + cardType + " card on $" + total);
     } else {
@@ -488,7 +503,6 @@ function finishOrder() {
     }
 }
 
-//4135678901234
 window.addEventListener("load", function () {
     "use strict";
     var i, radios = window.document.getElementsByName("doughtype"),
